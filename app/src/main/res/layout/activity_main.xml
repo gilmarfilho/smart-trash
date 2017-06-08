@@ -10,7 +10,27 @@
 <View
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorBackground">    
+    android:background="@color/colorBackground"
+    android:id="@+id/view" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:text="Nova Lixeira"
+
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        android:layout_marginTop="77dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+
+
+        />
 
 
 </android.support.constraint.ConstraintLayout>
