@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each{
-        it.buildConfigField('String', 'OPEN_KEY', 'VSHFMPZG2OY7JCE4')
+        it.buildConfigField('String', 'OPEN_KEY', '"VSHFMPZG2OY7JCE4"')
 
     }
 }
