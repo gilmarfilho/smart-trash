@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <ImageView
+        android:id="@+id/fullTrash"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/full_trash" />
+    <Button
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/openInter"
-        android:gravity="center"
-        android:textSize="100sp"
-        android:textColor="@color/textColor"/>
-
+        android:drawableLeft="@mipmap/refresh"/>
     <View
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

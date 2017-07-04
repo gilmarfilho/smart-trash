@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="login">Login</string>
-    <string name="openInter">Smart Trash</string>
+    <string name="app_name">Smart Trash</string>
 </resources>
