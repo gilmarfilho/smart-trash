@@ -1,22 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:padding="6dip" android:layout_height="?android:attr/listPreferredItemHeight">
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:text="Recepção"/>
     <ImageView
-        android:id="@+id/fullTrash"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/icon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@id/description"
         android:src="@mipmap/full_trash" />
-    <Button
-        android:id="@+id/refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:drawableLeft="@mipmap/refresh"/>
-    <View
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/colorBackground"/>
-
-
-
-</LinearLayout>
+</RelativeLayout>
