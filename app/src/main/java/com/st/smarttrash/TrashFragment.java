@@ -3,7 +3,11 @@ package com.st.smarttrash;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +19,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by vinic on 04/07/2017.
@@ -34,42 +41,76 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         TrashTask trashTask = new TrashTask();
         trashTask.execute();
     }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-    public class TrashTask extends AsyncTask<String , Void,  String[]>  {
+        // Create some dummy data for the ListView.  Here's a sample weekly forecast
+        String[] data = {
+        };
+        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+
+        // Now that we have some dummy forecast data, create an ArrayAdapter.
+        // The ArrayAdapter will take data from a source (like our dummy forecast) and
+        // use it to populate the ListView it's attached to.
+        trashAdapter =
+                new ArrayAdapter<String>(
+                        getActivity(), // The current context (this activity)
+                        R.layout.list_item_trash, // The name of the layout ID.
+                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                        weekForecast);
+
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // Get a reference to the ListView, and attach this adapter to it.
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view_trash);
+        listView.setAdapter(trashAdapter);
+
+        return rootView;
+    }
+
+
+    private class TrashTask extends AsyncTask<String , Void,  String>  {
+
         private final String LOG_TAG = TrashTask.class.getSimpleName();
-        private String[] getSizeFromJson(String sizeJsonStr)
+
+        private String getSizeFromJson(String sizeJsonStr)
                 throws JSONException {
 
 
             final String OWM_FEEDS = "feeds";
+            final String OWM_FIELD = "field1";
+            final String OWM_FIELD2 = "field2";
+            final String OWM_FIELD3 = "field3";
 
             JSONObject jsonData = new JSONObject(sizeJsonStr);
             JSONArray feeds = jsonData.getJSONArray(OWM_FEEDS);
+            JSONObject feedsObj = feeds.getJSONObject(0);
+            String fieldValue = feedsObj.getString(OWM_FIELD);
+            String field2 = feedsObj.getString(OWM_FIELD2);
+            String field3 = feedsObj.getString(OWM_FIELD3);
 
-            Log.v(LOG_TAG, "Forecast entry: " + feeds);
-            String[] teste = new String[2];
-            teste[0] = feeds.toString()+"Forecast entry: ";
-            teste[1] = feeds.toString()+"Forecast entry: ";
-            return teste;
+            String last = "Volume: "+fieldValue +" - "+ "Localização: "+field2 + " - " + "Status: "+field3;
+
+
+            return last;
 
         }
 
-        protected String[] doInBackground(String...params) {
+        protected String doInBackground(String...params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
+            String forecastJsonStr;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                String baseUrl = "https://api.thingspeak.com/channels/297072/feeds.json?api_key=VSHFMPZG2OY7JCE4&results=1";
-                String apiKey = "&APPID=" + BuildConfig.OPEN_KEY;
-                URL url = new URL(baseUrl.concat(apiKey));
+                URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key=VSHFMPZG2OY7JCE4&results=1");
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -78,7 +119,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
 
                 // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 if (inputStream == null) {
                     // Nothing to do.
                     return null;
@@ -122,6 +163,13 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                 }
             }
             return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            if(result != null){
+                trashAdapter.clear();
+                trashAdapter.add(result);
+            }
         }
     }
 
