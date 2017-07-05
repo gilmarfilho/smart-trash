@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +33,7 @@ import java.util.List;
 public class TrashFragment extends android.support.v4.app.Fragment {
 
     private ArrayAdapter<String> trashAdapter;
+    private ArrayAdapter<ImageView> imgAdapter;
 
     public TrashFragment(){
     }
@@ -48,14 +50,14 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         // Create some dummy data for the ListView.  Here's a sample weekly forecast
         String[] data = {
         };
-        ImageView img = (ImageView)getActivity().findViewById(R.id.trash_empty);
-
+        ImageView img = (ImageView)getActivity().findViewById(R.id.trash_full);
+        List<ImageView> imgTrash = new ArrayList<ImageView>(Arrays.asList(img));
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
-
+        imgAdapter = new ArrayAdapter<ImageView>(getActivity(),R.layout.list_item_trash,R.id.list_item_forecast_textview,imgTrash);
         trashAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
@@ -67,8 +69,8 @@ public class TrashFragment extends android.support.v4.app.Fragment {
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_trash);
-
-        listView.setAdapter(trashAdapter);
+        ImageView imgView = (ImageView) rootView.findViewById(R.id.trash_empty);
+        listView.setAdapter(imgAdapter);
 
 
 
