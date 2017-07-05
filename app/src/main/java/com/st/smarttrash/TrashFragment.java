@@ -70,7 +70,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_trash);
         ImageView imgView = (ImageView) rootView.findViewById(R.id.trash_empty);
-        listView.setAdapter(imgAdapter);
+        listView.setAdapter(trashAdapter);
 
 
 
