@@ -8,6 +8,7 @@ import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity {
+     TrashFragment frag = new TrashFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new TrashFragment())
+                    .add(R.id.container, frag)
                     .commit();
         }
 
@@ -33,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btn_refresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new TrashFragment())
-                        .commit();
+                frag.updateStatus();
             }
         });
     }
