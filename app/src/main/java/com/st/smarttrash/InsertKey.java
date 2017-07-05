@@ -43,6 +43,7 @@ public class InsertKey extends Activity{
 
                 //Armazena a chave do thingspeak
                  if(armazenar(key.getText().toString())){
+                     TrashFragment.getInstance().updateStatus();
                      finish();
                  }
 
