@@ -84,7 +84,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
     }
 
 
-    private class TrashTask extends AsyncTask<String , Void,  String>  {
+    private class TrashTask extends AsyncTask<String , Void,  String[]>  {
 
         private final String LOG_TAG = TrashTask.class.getSimpleName();
 
@@ -96,32 +96,67 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             this.ctx = ctx;
             prefs = ctx.getSharedPreferences("chave",Context.MODE_PRIVATE);
         }
-        private String getSizeFromJson(String sizeJsonStr)
+
+        private String[] getSizeFromJson(String sizeJsonStr)
                 throws JSONException {
 
 
             final String OWM_FEEDS = "feeds";
-            final String OWM_FIELD = "field1";
-            final String OWM_FIELD2 = "field2";
-            final String OWM_FIELD3 = "field3";
+            String [] OWM_FIELD = new String[8];
+            for(int i = 0;i<OWM_FIELD.length;i++){
+                OWM_FIELD[i]="field"+(i+1);
+            }
+
             String nivel;
             JSONObject jsonData = new JSONObject(sizeJsonStr);
             JSONArray feeds = jsonData.getJSONArray(OWM_FEEDS);
-            JSONObject feedsObj = feeds.getJSONObject(0);
-            String fieldValue = feedsObj.getString(OWM_FIELD);
-            String field2 = feedsObj.getString(OWM_FIELD2);
-            String field3 = feedsObj.getString(OWM_FIELD3);
 
-            if(Integer.parseInt(fieldValue)<700){
+            JSONObject feedsObj = feeds.getJSONObject(0);
+            String [] fieldValue = new String[8];
+            for(int i = 0;i<fieldValue.length;i++){
+               fieldValue[i]=feedsObj.getString(OWM_FIELD[i]);
+            }
+            String [] last = new String[4];
+
+            if(Integer.parseInt(fieldValue[0])<700){
                 nivel = "BAIXO";
             }
-            else if(Integer.parseInt(fieldValue)<900){
+            else if(Integer.parseInt(fieldValue[0])<900){
                 nivel = "MEDIO";
             }
             else nivel = "ALTO";
 
-            String last = "Nível: "+nivel +"\n\n"+ "Local: "+field2 + "\n\n" + "Status: "+field3;
+            last[0] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[1];
 
+            if(Integer.parseInt(fieldValue[2])<700){
+                nivel = "BAIXO";
+            }
+            else if(Integer.parseInt(fieldValue[2])<900){
+                nivel = "MEDIO";
+            }
+            else nivel = "ALTO";
+
+            last[1] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[3];
+
+            if(Integer.parseInt(fieldValue[4])<700){
+                nivel = "BAIXO";
+            }
+            else if(Integer.parseInt(fieldValue[4])<900){
+                nivel = "MEDIO";
+            }
+            else nivel = "ALTO";
+
+            last[2] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[5];
+
+            if(Integer.parseInt(fieldValue[6])<700){
+                nivel = "BAIXO";
+            }
+            else if(Integer.parseInt(fieldValue[6])<900){
+                nivel = "MEDIO";
+            }
+            else nivel = "ALTO";
+
+            last[3] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[7];
 
             return last;
 
@@ -132,7 +167,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             key = prefs.getString("chave", "chave");
         }
 
-        protected String doInBackground(String...params) {
+        protected String[] doInBackground(String...params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -199,10 +234,12 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             return null;
         }
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result[]) {
             trashAdapter.clear();
             if(result != null){
-                trashAdapter.add(result);
+                for(String trashStr: result){
+                    trashAdapter.add(trashStr);
+                }
             }
         }
 
