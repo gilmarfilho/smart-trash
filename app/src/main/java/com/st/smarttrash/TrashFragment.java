@@ -118,40 +118,40 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             }
             String [] last = new String[4];
 
-            if(Integer.parseInt(fieldValue[0])<700){
+            if(Integer.parseInt(fieldValue[0])<200){
                 nivel = "BAIXO";
             }
-            else if(Integer.parseInt(fieldValue[0])<900){
+            else if(Integer.parseInt(fieldValue[0])<350){
                 nivel = "MEDIO";
             }
             else nivel = "ALTO";
 
             last[0] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[1];
 
-            if(Integer.parseInt(fieldValue[2])<700){
+            if(Integer.parseInt(fieldValue[2])<200){
                 nivel = "BAIXO";
             }
-            else if(Integer.parseInt(fieldValue[2])<900){
+            else if(Integer.parseInt(fieldValue[2])<350){
                 nivel = "MEDIO";
             }
             else nivel = "ALTO";
 
             last[1] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[3];
 
-            if(Integer.parseInt(fieldValue[4])<700){
+            if(Integer.parseInt(fieldValue[4])<200){
                 nivel = "BAIXO";
             }
-            else if(Integer.parseInt(fieldValue[4])<900){
+            else if(Integer.parseInt(fieldValue[4])<350){
                 nivel = "MEDIO";
             }
             else nivel = "ALTO";
 
             last[2] = "Nível: "+nivel +"\n\n"+ "Local: "+fieldValue[5];
 
-            if(Integer.parseInt(fieldValue[6])<700){
+            if(Integer.parseInt(fieldValue[6])<200){
                 nivel = "BAIXO";
             }
-            else if(Integer.parseInt(fieldValue[6])<900){
+            else if(Integer.parseInt(fieldValue[6])<350){
                 nivel = "MEDIO";
             }
             else nivel = "ALTO";
