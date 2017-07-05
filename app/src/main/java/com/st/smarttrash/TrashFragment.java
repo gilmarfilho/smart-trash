@@ -54,13 +54,13 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         String[] data = {
         };
 
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+        List<String> trashData = new ArrayList<String>(Arrays.asList(data));
         trashAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_trash, // The name of the layout ID.
                         R.id.list_item_trash_textview, // The ID of the textview to populate.
-                        weekForecast);
+                        trashData);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -97,7 +97,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             prefs = ctx.getSharedPreferences("chave",Context.MODE_PRIVATE);
         }
 
-        private String[] getSizeFromJson(String sizeJsonStr)
+        private String[] getDataFromJson(String dataJsonStr)
                 throws JSONException {
 
 
@@ -108,7 +108,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             }
 
             String nivel;
-            JSONObject jsonData = new JSONObject(sizeJsonStr);
+            JSONObject jsonData = new JSONObject(dataJsonStr);
             JSONArray feeds = jsonData.getJSONArray(OWM_FEEDS);
 
             JSONObject feedsObj = feeds.getJSONObject(0);
@@ -210,7 +210,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                 }
                 trashJsonStr = buffer.toString();
                 try{
-                return getSizeFromJson(trashJsonStr);
+                return getDataFromJson(trashJsonStr);
                 } catch (JSONException e){
                     Log.e(LOG_TAG, e.getMessage(), e);
                     e.printStackTrace();
