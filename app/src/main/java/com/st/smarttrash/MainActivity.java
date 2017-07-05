@@ -19,15 +19,24 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        Button btn = (Button) findViewById(R.id.insert_key);
+        Button btn_key = (Button) findViewById(R.id.insert_key);
 
-        btn.setOnClickListener(new View.OnClickListener(){
-
+        btn_key.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, InsertKey.class));
             }
         });
 
+        Button btn_refresh = (Button) findViewById(R.id.refresh);
+
+        btn_refresh.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new TrashFragment())
+                        .commit();
+            }
+        });
     }
 }
