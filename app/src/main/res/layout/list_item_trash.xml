@@ -8,7 +8,7 @@
     android:layout_width="100dp" android:layout_height="100dp"
     android:id="@+id/trash_img"
     android:layout_gravity="center"
-    android:src="@drawable/empty_trash"/>
+    android:src="@drawable/trash_full"/>
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
