@@ -1,14 +1,13 @@
 package com.st.smarttrash;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by vinic on 04/07/2017.
@@ -49,7 +50,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         final String LOG_TAG = TrashFragment.class.getSimpleName();
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
+        // Create some dummy data for the ListView.
         String[] data = {
         };
 
@@ -60,8 +61,8 @@ public class TrashFragment extends android.support.v4.app.Fragment {
       //  Log.v(LOG_TAG,"ID DA IMAGEM: "+img.getId());
         //Log.v(LOG_TAG,"ID DA IMAGEM 3: "+getActivity().toString());
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
+        // Create an ArrayAdapter.
+        // The ArrayAdapter will take data from a source and
         // use it to populate the ListView it's attached to.
         trashAdapter =
                 new ArrayAdapter<String>(
@@ -81,7 +82,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         return rootView;
     }
     public void updateStatus(){
-        TrashTask trashTask = new TrashTask();
+        TrashTask trashTask = new TrashTask(getActivity());
         trashTask.execute();
     }
 
@@ -96,6 +97,14 @@ public class TrashFragment extends android.support.v4.app.Fragment {
 
         private final String LOG_TAG = TrashTask.class.getSimpleName();
 
+        Context ctx;
+        String key;
+        SharedPreferences prefs;
+
+        TrashTask(Context ctx){
+            this.ctx = ctx;
+            prefs = ctx.getSharedPreferences("chave",Context.MODE_PRIVATE);
+        }
         private String getSizeFromJson(String sizeJsonStr)
                 throws JSONException {
 
@@ -119,6 +128,11 @@ public class TrashFragment extends android.support.v4.app.Fragment {
 
         }
 
+        @Override
+        public void onPreExecute() {
+            key = prefs.getString("chave", "chave");
+        }
+
         protected String doInBackground(String...params) {
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
@@ -129,10 +143,12 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             String forecastJsonStr;
 
             try {
+
+
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key=VSHFMPZG2OY7JCE4&results=1");
+                URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key=" + key +"&results=1");
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -193,6 +209,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                 trashAdapter.add(result);
             }
         }
+
     }
 
 

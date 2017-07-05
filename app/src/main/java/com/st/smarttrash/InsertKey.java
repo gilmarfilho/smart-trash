@@ -61,7 +61,7 @@ public class InsertKey extends Activity{
             SharedPreferences settings = getSharedPreferences("chave", MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
 
-            editor.putString(key.toUpperCase(), "chave");
+            editor.putString("chave", key.toUpperCase());
 
             // Commit as edições
             editor.commit();
