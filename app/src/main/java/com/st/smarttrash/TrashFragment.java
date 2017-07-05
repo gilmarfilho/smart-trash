@@ -200,8 +200,8 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         }
         @Override
         protected void onPostExecute(String result) {
+            trashAdapter.clear();
             if(result != null){
-                trashAdapter.clear();
                 trashAdapter.add(result);
             }
         }
