@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 
 public class MainActivity extends AppCompatActivity {
-     TrashFragment frag = new TrashFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, frag)
+                    .add(R.id.container, TrashFragment.getInstance())
                     .commit();
         }
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         btn_refresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                frag.updateStatus();
+                TrashFragment.getInstance().updateStatus();
             }
         });
 

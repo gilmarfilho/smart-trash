@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -26,18 +25,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by vinic on 04/07/2017.
  */
 
 public class TrashFragment extends android.support.v4.app.Fragment {
+    private static final TrashFragment instance = new TrashFragment();
 
     private ArrayAdapter<String> trashAdapter;
-    private ArrayAdapter<ImageView> imgAdapter;
 
     public TrashFragment(){
+    }
+
+    public static TrashFragment getInstance(){
+        return instance;
     }
 
     @Override
@@ -48,27 +50,16 @@ public class TrashFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final String LOG_TAG = TrashFragment.class.getSimpleName();
 
-        // Create some dummy data for the ListView.
         String[] data = {
         };
 
-        //final View imgEntryView = inflater.inflate(R.layout.activity_main,null);
-        //ImageView img = (ImageView)getActivity().imgEntryView.findViewById( R.id.trash_img);
-        //img.setImageResource(R.drawable.empty_trash);
-
-      //  Log.v(LOG_TAG,"ID DA IMAGEM: "+img.getId());
-        //Log.v(LOG_TAG,"ID DA IMAGEM 3: "+getActivity().toString());
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
-        // Create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source and
-        // use it to populate the ListView it's attached to.
         trashAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_trash, // The name of the layout ID.
-                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                        R.id.list_item_trash_textview, // The ID of the textview to populate.
                         weekForecast);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -140,14 +131,13 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr;
+            String trashJsonStr;
 
             try {
 
 
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
                 URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key=" + key +"&results=1");
 
                 // Create the request to OpenWeatherMap, and open the connection
@@ -176,17 +166,16 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                forecastJsonStr = buffer.toString();
+                trashJsonStr = buffer.toString();
                 try{
-                return getSizeFromJson(forecastJsonStr);
+                return getSizeFromJson(trashJsonStr);
                 } catch (JSONException e){
                     Log.e(LOG_TAG, e.getMessage(), e);
                     e.printStackTrace();
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
+                // If the code didn't successfully get the speakthing data, there's no point in attemping
                 return null;
             } finally {
                 if (urlConnection != null) {
