@@ -104,7 +104,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             final String OWM_FIELD = "field1";
             final String OWM_FIELD2 = "field2";
             final String OWM_FIELD3 = "field3";
-
+            String nivel;
             JSONObject jsonData = new JSONObject(sizeJsonStr);
             JSONArray feeds = jsonData.getJSONArray(OWM_FEEDS);
             JSONObject feedsObj = feeds.getJSONObject(0);
@@ -112,7 +112,15 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             String field2 = feedsObj.getString(OWM_FIELD2);
             String field3 = feedsObj.getString(OWM_FIELD3);
 
-            String last = "Volume: "+fieldValue +"\n\n"+ "Localização: "+field2 + "\n\n" + "Status: "+field3;
+            if(Integer.parseInt(fieldValue)<700){
+                nivel = "BAIXO";
+            }
+            else if(Integer.parseInt(fieldValue)<900){
+                nivel = "MEDIO";
+            }
+            else nivel = "ALTO";
+
+            String last = "Nível: "+nivel +"\n\n"+ "Local: "+field2 + "\n\n" + "Status: "+field3;
 
 
             return last;
@@ -136,11 +144,10 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             try {
 
 
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are avaiable at OWM's forecast API page, at
-                URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key=" + key +"&results=1");
 
-                // Create the request to OpenWeatherMap, and open the connection
+                // Possible parameters are avaiable at OWM's forecast API page, at
+                URL url = new URL("https://api.thingspeak.com/channels/297072/feeds.json?api_key="+key+"&results=1");
+
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
