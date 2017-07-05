@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Smart Trash</string>
+    <string name="insert_key_title">Insira uma chave do thingspeak</string>
 </resources>
