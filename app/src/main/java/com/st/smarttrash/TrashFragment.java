@@ -1,5 +1,6 @@
 package com.st.smarttrash;
 
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,12 +48,13 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         // Create some dummy data for the ListView.  Here's a sample weekly forecast
         String[] data = {
         };
+        ImageView img = (ImageView)getActivity().findViewById(R.id.trash_empty);
+
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
-
 
         trashAdapter =
                 new ArrayAdapter<String>(
@@ -65,7 +67,10 @@ public class TrashFragment extends android.support.v4.app.Fragment {
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_trash);
+
         listView.setAdapter(trashAdapter);
+
+
 
         return rootView;
     }
