@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
     android:background="@color/colorBackground">
-  
+
+    <Button
+        android:id="@+id/insert_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 
 </LinearLayout>
