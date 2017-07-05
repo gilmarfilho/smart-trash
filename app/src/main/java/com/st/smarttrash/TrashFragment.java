@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -38,8 +39,6 @@ public class TrashFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        TrashTask trashTask = new TrashTask();
-        trashTask.execute();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +52,8 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
+
+
         trashAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
@@ -67,6 +68,16 @@ public class TrashFragment extends android.support.v4.app.Fragment {
         listView.setAdapter(trashAdapter);
 
         return rootView;
+    }
+    public void updateStatus(){
+        TrashTask trashTask = new TrashTask();
+        trashTask.execute();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        updateStatus();
     }
 
 
@@ -90,7 +101,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
             String field2 = feedsObj.getString(OWM_FIELD2);
             String field3 = feedsObj.getString(OWM_FIELD3);
 
-            String last = "Volume: "+fieldValue +" - "+ "Localização: "+field2 + " - " + "Status: "+field3;
+            String last = "Volume: "+fieldValue +"\n\n"+ "Localização: "+field2 + "\n\n" + "Status: "+field3;
 
 
             return last;
