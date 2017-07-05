@@ -30,8 +30,10 @@ public class InsertKey extends Activity{
         //Define o tamanho da tela
         getWindow().setLayout((int) (width*.8), (int) (height*.7));
 
+        //Botão de confirmar
         Button btn = (Button) findViewById(R.id.button_inserir);
 
+        //Chave inserida pelo usuário
         final TextView key = (TextView) findViewById(R.id.key);
 
         btn.setOnClickListener(new View.OnClickListener(){
@@ -40,7 +42,10 @@ public class InsertKey extends Activity{
             public void onClick(View view) {
 
                 //Armazena a chave do thingspeak
-                armazenar(key.getText().toString());
+                 if(armazenar(key.getText().toString())){
+                     finish();
+                 }
+
 
             }
         });
@@ -51,7 +56,7 @@ public class InsertKey extends Activity{
      * Armazena um valor a SharedPreferences
      * @param key valor a ser armazenado
      */
-    private void armazenar(String key){
+    private boolean armazenar(String key){
 
         //Verifica se a chave é do tamanho correto
         if(key.length() == 16) {
@@ -65,7 +70,10 @@ public class InsertKey extends Activity{
 
             // Commit as edições
             editor.commit();
+
+            return true;
         }
 
+        return false;
     }
 }
