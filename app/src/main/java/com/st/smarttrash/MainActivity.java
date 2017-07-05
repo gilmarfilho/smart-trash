@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+        if(getSharedPreferences("chave", 0).getAll().isEmpty()){
+            startActivity(new Intent(MainActivity.this, InsertKey.class));
+        }
+
         Button btn_key = (Button) findViewById(R.id.insert_key);
 
         btn_key.setOnClickListener(new View.OnClickListener(){
