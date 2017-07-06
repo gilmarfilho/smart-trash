@@ -117,7 +117,7 @@ public class TrashFragment extends android.support.v4.app.Fragment {
                fieldValue[i]=feedsObj.getString(OWM_FIELD[i]);
             }
             String [] last = new String[4];
-
+            Log.v(LOG_TAG,"Valeu field:"+fieldValue[0]);
             if(Integer.parseInt(fieldValue[0])<200){
                 nivel = "BAIXO";
             }
